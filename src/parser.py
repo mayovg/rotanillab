@@ -18,7 +18,6 @@ def accept(tokens):
     else:
         return False
 
-
 def prog(tokens):
     """
     Evalua que que la entrada sea una expresión aritmética o una asignación:
@@ -38,5 +37,3 @@ if (len(sys.argv) > 1):
 else:
     tokens = get_tokens("prueba.txt")
 
-for t in tokens:
-    print t[1]
