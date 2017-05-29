@@ -4,7 +4,7 @@
  :author :Luis Pablo Mayo Vega
  :note :Compiladores 2017-2
 """
-import Visitor
+from visitor import *
 
 class Nodo:
     """
@@ -52,7 +52,7 @@ class Nodo:
         branch = [] # designa si se dibujan ramas o espacios
         for i in range(0, p):
             branch[i] = False # al principio no se dibuja ninguna rama
-        s = toString(self, 0, branch):
+        s = toString(self, 0, branch)
         return s[:-1]
 
     def toString(self, lev, branch):
@@ -86,7 +86,7 @@ class Nodo:
         Dibuja los espacios y ramas que van antes de un nodo
         """
         s = ""
-        for i in range (0. level):
+        for i in range(0, level):
             if (branch[i]):
                 s += "│  " # si hay una rama la dibuja
             else:
@@ -122,3 +122,25 @@ class NodoNum(Nodo):
         Usa el constructor de su clase padre
         """
         Nodo.__init__(self,token)
+        self.value = float(token[1])
+
+    def accept(visitor):
+        """
+        El visitor acepta si es un nodo de número válido
+        """
+        visitor.visitNodoNum(self)
+
+class NodoSuma(Nodo):
+    pass
+class NodoResta(Nodo):
+    pass
+class NodoMult(Nodo):
+    pass
+class NodoDiv(Nodo):
+    pass
+class NodoParIzq(Nodo):
+    pass
+class NodoParDer(Nodo):
+    pass
+class NodoAsig(Nodo):
+    pass
