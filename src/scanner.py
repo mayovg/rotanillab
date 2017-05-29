@@ -14,6 +14,7 @@ varid = letra + Rep(letra | digito)
 numero = (Rep1(digito)) | (Rep1(digito) + Str(".") + Rep1(digito))
 espacios = Any(" \t\n")
 
+# Especificación del lexicón para los lexemas
 lex = Lexicon([
     (varid, 'VAR_ID'),
     (numero, 'NUMERO'),
@@ -25,10 +26,16 @@ lex = Lexicon([
     (Str("("), 'PARIZQ'),
     (Str(")"), 'PARDER'),
     (Str(";"), 'SEMICOLON'),
+    
     (espacios, IGNORE)
 ])
 
 def get_tokens(filename):
+    """
+    Regresa una lista con todos los tokens de un archivo de entrada.
+    Para obtener cada token de dicho archivo, usa un Scanner de Plex,
+    este scanner usa su funcion read() para buscar lexemas en el archivo 
+    """
     tokens = []
     f = open(filename, 'r')
     scanner = Scanner(lex, f, filename)
@@ -39,4 +46,3 @@ def get_tokens(filename):
         tokens.append(tok)
     return tokens
 
-#tokens = get_tokens("prueba.txt")
