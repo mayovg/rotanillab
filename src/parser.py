@@ -18,12 +18,13 @@ class Parser:
         param: una lista de tokens 
         """
         self.tokens = tokens
-    
-    def accept(self):
+        self.nodes_queue = []
+        
+    def start(self):
         """
         Acepta la cadena de entrada si es un programa válido para la grámatica:
         S -> Prog
-        """ 
+        """       
         if(prog(self) or len(self.tokens) is 0):
             return True
         else:
@@ -38,10 +39,31 @@ class Parser:
             return True
         else:
             return False
+
+    def asig(self):
+        pass
+
+    def asigp(self):
+        pass
         
     def expr(self):
         pass
 
+    def exprp(self):
+         pass
+
+    def term(self):
+        pass
+
+    def termp(self):
+        pass
+
+    def fact(self):
+        pass  
+
+    def error(self):
+        raise Exception('Lo siento, no te entendí')
+    
 # pequeña prueba
 lexer = Lexer()
 if (len(sys.argv) > 1):

@@ -34,6 +34,9 @@ class Visitor:
     def visitNodoAsig(self, nodo_asig):
         raise NotImplementedError("Esta clase no implementa ninguna función")
 
+    def visitNodoPuntoComa(self, nodo_pyc):
+        raise NotImplementedError("Esta clase no implementa ninguna función")
+
 class VisitorInterp(Visitor):
     """
     Clase visitor para el interprete
@@ -121,6 +124,9 @@ class VisitorInterp(Visitor):
 
         def visitNodoParDer(self, nodo_par_der):
             parder_count  += 1
+
+        def visitNodoPuntoComa(self, nodo_pyc):
+            pass # hmmm
         
 class VisitorPrint(Visitor):
     pass    

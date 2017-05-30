@@ -209,7 +209,17 @@ class NodoAsig(Nodo):
     Nodo para el operador de asignación '='
     """
     def __init__(self, token):
-        Nodo.__init__(self, token):
+        Nodo.__init__(self, token)
 
     def accept(visitor):
         visitor.visitNodoAsig(self) 
+
+class NodoPuntoComa(Nodo):
+    """
+    Nodo para el punto y coma (fin de la instrucción)
+    """
+    def __init__(self, token):
+        Nodo.__init__(self, token)
+
+    def accept(visitor):
+        visitor.visitNodoPuntoComa(self)

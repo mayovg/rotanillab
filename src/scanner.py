@@ -33,7 +33,7 @@ class Lexer:
             (Str("="), 'ASIG'),
             (Str("("), 'PARIZQ'),
             (Str(")"), 'PARDER'),
-            (Str(";"), 'SEMICOLON'),
+            (Str(";"), 'PUNTOCOMA'),          
             (espacios, IGNORE)
         ])
 
