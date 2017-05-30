@@ -8,12 +8,29 @@ class Visitor:
     """
     Clase 'abstracta' para el patrón de diseño Visitor
     """
+    def __init__(self):
+        raise NotImplementedError("Esta clase no implementa ninguna función")
     def visitNodoNum(self, nodo_num):
         raise NotImplementedError("Esta clase no implementa ninguna función")
 
     def visitNodoSuma(self, nodo_suma):
         raise NotImplementedError("Esta clase no implementa ninguna función")
 
+    def visitNodoResta(self, nodo_resta):
+        raise NotImplementedError("Esta clase no implementa ninguna función")
+
+    def visitNodoMult(self, nodo_mult):
+        raise NotImplementedError("Esta clase no implementa ninguna función")
+
+    def visitNodoDiv(self, nodo_div):
+        raise NotImplementedError("Esta clase no implementa ninguna función")
+
+    def visitNodoParIzq(self, nodo_par_izq):
+        raise NotImplementedError("Esta clase no implementa ninguna función")
+
+    def visitNodoParDer(self, nodo_par_der):
+        raise NotImplementedError("Esta clase no implementa ninguna función")
+    
     def visitNodoAsig(self, nodo_asig):
         raise NotImplementedError("Esta clase no implementa ninguna función")
 
@@ -26,16 +43,23 @@ class VisitorInterp(Visitor):
         Inicializa el resultado de la interpretación en 0.
         Además, crea una tupla para la variable y su valor.
         """
-        res = 0.0
-        vid = ""
+        res = 0
+        ident = ''
         var_tup = ()
-    
+        parizq_count = 0
+        parder_count = 0
+        
     def visitNodoNum(self, nodo_num):
         """
         Visita un nodo de número y guarda su valor en el resultado
         """
         self.res = nodo_num.value
 
+    def visitNodoVar(self, nodo_var):
+        """
+        Visita un nodo de variable y guarda su identificador
+        """
+        self.ident = nodo_var.varid 
     def visitNodoSuma(self, nodo_suma):
         """
         Visita un nodo suma y evalua los valores de sus hijos izq y der,
@@ -83,15 +107,20 @@ class VisitorInterp(Visitor):
     def visitNodoAsig(self, nodo_asig):
         """
         Visita un nodo de asignación y guarda la variable
-        y su valor correspondiente 
+        y su valor correspondiente que están en sus hijos
         """
-        self.var_tup = nodo_asig.tup # creo que debería hacer algo más
+        nodo_asig.izq.accept(self)
+        iden = self.ident
+        nodo_asig.izq.accept(self)
+        valor = self.res
+        self.var_tup = (iden, valor)
         
         def visitNodoParIzq(self, nodo_par_izq):
-            pass
+            # idk wat 2 do with dis 1
+            parizq_count += 1
 
         def visitNodoParDer(self, nodo_par_der):
-            pass
+            parder_count  += 1
         
 class VisitorPrint(Visitor):
     pass    
