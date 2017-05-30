@@ -19,12 +19,14 @@ class Parser:
         """
         self.tokens = tokens
         self.nodes_queue = []
-        
+        self.word = ()
     def start(self):
         """
         Acepta la cadena de entrada si es un programa válido para la grámatica:
         S -> Prog
-        """       
+        """
+        word = tokens.pop(0)
+        #nodes_queue.append(Nodo(word))
         if(prog(self) or len(self.tokens) is 0):
             return True
         else:
@@ -32,7 +34,7 @@ class Parser:
 
     def prog(self):
         """
-        Evalua que que la entrada sea una expresión aritmética o una asignación:
+        Evalua que la entrada sea una expresión aritmética o una asignación:
         Prog -> Expr 
         """
         if (expr(self) or asig(self)):
@@ -41,25 +43,71 @@ class Parser:
             return False
 
     def asig(self):
-        pass
+        if (self.word[0] is 'VARIABLE'):
+            nodes_queue.append(NodoVar(word))
+            word = tokens.pop(0)
+            return asigp(self)
+        else:
+            error(self)
 
     def asigp(self):
-        pass
-        
+        if (self.word[0] is 'ASIG'):
+            nodes_queue.append(NodoAsig(word))
+            word = tokens.pop(0)
+            if (expr(self)):
+                return True
+            else:
+                error(self)
+            
     def expr(self):
-        pass
+        if (term(self)):
+            return eprime(self)
+        else:
+            error(self)
 
-    def exprp(self):
-         pass
+    def eprime(self):
+        if (self.word[0] is 'OP_SUMA' or self.word[0] is 'OP_RESTA'):
+            if (self.word[0] is 'OP_RESTA'):
+                nodes_queue.append(NodoResta(word))
+            nodes_queue.append(NodoSuma(word))
+            word = tokens.pop(0)
+            if (term(self)):
+                return eprime(self)
+            else:
+                error(self)
+        elif (self.word[0] is 'PARDER' or word[0] is 'eof'):
+            return True
+        else:
+            error(self)
 
     def term(self):
-        pass
+        if (factor(self)):
+            return tprime(self)
+        else:
+            error(self)
 
-    def termp(self):
-        pass
+    def tprime(self):
+        if (self.word[0] is 'OP_MULT' or self.word[0] is 'OP_DIV'):
+            word = tokens.pop(0)
+            if (factor(self)):
+                return tprime(self)
+            else:
+                error(self)
+        elif (self.word[0] is 'OP_SUMA' or self.word[0] is 'OP_RESTA'
+              or self.word[0] is 'PARDER' or self.word[0] is 'eof'):
+            return True
+        else:
+            error(self)
 
     def fact(self):
-        pass  
+        if (self.word[0] is 'PARIZQ'):
+            word = tokens.pop(0)
+            if (not expr(self)):
+                error(self)
+            if (word[0] is not 'PARDER'):
+                error(self)
+            word = tokens.pop(0)
+            return True
 
     def error(self):
         raise Exception('Lo siento, no te entendí')

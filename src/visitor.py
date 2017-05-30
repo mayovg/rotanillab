@@ -24,12 +24,6 @@ class Visitor:
 
     def visitNodoDiv(self, nodo_div):
         raise NotImplementedError("Esta clase no implementa ninguna función")
-
-    def visitNodoParIzq(self, nodo_par_izq):
-        raise NotImplementedError("Esta clase no implementa ninguna función")
-
-    def visitNodoParDer(self, nodo_par_der):
-        raise NotImplementedError("Esta clase no implementa ninguna función")
     
     def visitNodoAsig(self, nodo_asig):
         raise NotImplementedError("Esta clase no implementa ninguna función")
@@ -48,10 +42,8 @@ class VisitorInterp(Visitor):
         """
         res = 0
         ident = ''
-        var_tup = ()
-        parizq_count = 0
-        parder_count = 0
-        
+        var_list = []
+
     def visitNodoNum(self, nodo_num):
         """
         Visita un nodo de número y guarda su valor en el resultado
@@ -116,17 +108,10 @@ class VisitorInterp(Visitor):
         iden = self.ident
         nodo_asig.izq.accept(self)
         valor = self.res
-        self.var_tup = (iden, valor)
-        
-        def visitNodoParIzq(self, nodo_par_izq):
-            # idk wat 2 do with dis 1
-            parizq_count += 1
+        self.var_list.append((iden, valor))
 
-        def visitNodoParDer(self, nodo_par_der):
-            parder_count  += 1
-
-        def visitNodoPuntoComa(self, nodo_pyc):
-            pass # hmmm
+    def visitNodoPuntoComa(self, nodo_pyc):
+        pass # hmmm
         
 class VisitorPrint(Visitor):
     pass    

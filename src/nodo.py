@@ -184,7 +184,7 @@ class NodoDiv(Nodo):
 
     def accept(visitor):
         visitor.visitNodoDiv(self)
-        
+
 class NodoParIzq(Nodo):
     """
     Nodo de paréntesis que abre
@@ -203,7 +203,7 @@ class NodoParDer(Nodo):
 
     def accept(visitor):
         visitor.visitNodoParDer(self)
-        
+
 class NodoAsig(Nodo):
     """
     Nodo para el operador de asignación '='
