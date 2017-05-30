@@ -6,34 +6,46 @@
 """
 import sys
 from plex import *
-from scanner import *
+from scanner import Lexer
 
-def accept(tokens):
+class Parser:
     """
-    Acepta la cadena de entrada si es un programa válido para la grámatica:
-    S -> Prog
-    """ 
-    if(prog(tokens) or len(tokens) is 0):
+    Clase para el analizador sintáctico
+    """
+    def __init__(self, tokens):
+        """
+        Inicializador de los objetos Parser 
+        param: una lista de tokens 
+        """
+        self.tokens = tokens
+    
+    def accept(self):
+        """
+        Acepta la cadena de entrada si es un programa válido para la grámatica:
+        S -> Prog
+        """ 
+        if(prog(self) or len(self.tokens) is 0):
             return True
-    else:
-        return False
+        else:
+            return False
 
-def prog(tokens):
-    """
-    Evalua que que la entrada sea una expresión aritmética o una asignación:
-    Prog -> Expr 
-    """
-    if (expr(tokens) or asig(tokens)):
-        return True
-    else:
-        return False
-    
-    
-def expr(tokens):
-    pass
+    def prog(self):
+        """
+        Evalua que que la entrada sea una expresión aritmética o una asignación:
+        Prog -> Expr 
+        """
+        if (expr(self) or asig(self)):
+            return True
+        else:
+            return False
+        
+    def expr(self):
+        pass
 
+# pequeña prueba
+lexer = Lexer()
 if (len(sys.argv) > 1):
-    tokens = get_tokens(sys.argv[1])
+    tokens = lexer.get_tokens(sys.argv[1])
 else:
-    tokens = get_tokens("prueba.txt")
-
+    tokens = lexer.get_tokens("prueba.txt")
+print tokens
