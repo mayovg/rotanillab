@@ -102,7 +102,7 @@ class Nodo:
         if (self.izq is not None):
             # si hay hijo izquierdo, calcula su profundidad
             ld = depth(self.izq) 
-        if(self.der is not None):
+        if (self.der is not None):
             # si hay hijo derecho, calcula su profundidad
             rd = depth(self.der)
         # compara las profundidades y regresa la mayor
@@ -126,21 +126,90 @@ class NodoNum(Nodo):
 
     def accept(visitor):
         """
-        El visitor acepta si es un nodo de número válido
+        El visitor acepta si es un nodo de número válido 
+        y guarda el valor númerico del nodo para operarlo o imprimirlo
         """
         visitor.visitNodoNum(self)
 
+class NodoVar(Nodo):
+    """
+    Nodo para el identificador de una variable
+    """
+    def __init__(self, token):
+        Nodo.__init__(self, token)
+        self.varid = token[1]
+
+    def accept(visitor):
+        """
+        el visitor guarda el nombre de la variable
+        """
+        visitor.visitNodoVar(self)
+        
 class NodoSuma(Nodo):
-    pass
+    """
+    Nodo para el operador '+'
+    """
+    def __init__(self, token):
+        Nodo.__init__(self, token)
+
+    def accept(visitor):
+        visitor.visitNodoSuma(self)
+
 class NodoResta(Nodo):
-    pass
+    """
+    Nodo para el operador '-'
+    """
+    def __init__(self, token):
+        Nodo.__init__(self, token)
+
+    def accept(visitor):
+        visitor.visitNodoResta(self)
+        
 class NodoMult(Nodo):
-    pass
+    """
+    Nodo para el operador '*'
+    """
+    def __init__(self, token):
+        Nodo.__init__(self, token)
+
+    def accept(visitor):
+        visitor.visitNodoMult(self)
+        
 class NodoDiv(Nodo):
-    pass
+    """
+    Nodo para el operador '/'
+    """
+    def __init__(self, token):
+        Nodo.__init__(self, token)
+
+    def accept(visitor):
+        visitor.visitNodoDiv(self)
+        
 class NodoParIzq(Nodo):
-    pass
+    """
+    Nodo de paréntesis que abre
+    """
+    def __init__(self, token):
+        Nodo.__init__(self, token)
+
+    def accept(visitor):
+        visitor.visitNodoParIzq(self)
 class NodoParDer(Nodo):
-    pass
+    """
+    Nodo de paréntesis que cierra
+    """
+    def __init__(self, token):
+        Nodo.__init__(self, token)
+
+    def accept(visitor):
+        visitor.visitNodoParDer(self)
+        
 class NodoAsig(Nodo):
-    pass
+    """
+    Nodo para el operador de asignación '='
+    """
+    def __init__(self, token):
+        Nodo.__init__(self, token):
+
+    def accept(visitor):
+        visitor.visitNodoAsig(self) 
