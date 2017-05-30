@@ -26,7 +26,6 @@ class Parser:
         S -> Prog
         """
         word = tokens.pop(0)
-        #nodes_queue.append(Nodo(word))
         if(prog(self) or len(self.tokens) is 0):
             return True
         else:
@@ -43,6 +42,10 @@ class Parser:
             return False
 
     def asig(self):
+        """
+        Evalua la asignación
+        Asig -> VarAsig'
+        """
         if (self.word[0] is 'VARIABLE'):
             nodes_queue.append(NodoVar(word))
             word = tokens.pop(0)
@@ -51,6 +54,9 @@ class Parser:
             error(self)
 
     def asigp(self):
+        """
+        Asig' -> =Expr
+        """
         if (self.word[0] is 'ASIG'):
             nodes_queue.append(NodoAsig(word))
             word = tokens.pop(0)
@@ -60,12 +66,19 @@ class Parser:
                 error(self)
             
     def expr(self):
+        """
+        Evalua una expresión aritmética
+        Expr -> TermExpr'
+        """
         if (term(self)):
             return eprime(self)
         else:
             error(self)
 
     def eprime(self):
+        """
+        Expr' -> +TermExpr' | -TermExpr'
+        """
         if (self.word[0] is 'OP_SUMA' or self.word[0] is 'OP_RESTA'):
             if (self.word[0] is 'OP_RESTA'):
                 nodes_queue.append(NodoResta(word))
@@ -81,12 +94,19 @@ class Parser:
             error(self)
 
     def term(self):
+        """
+        Term -> FactorTerm'
+        """
         if (factor(self)):
             return tprime(self)
         else:
             error(self)
 
     def tprime(self):
+        """
+        Term' -> *FactorTerm'
+        Term' -> /FactorTerm'
+        """
         if (self.word[0] is 'OP_MULT' or self.word[0] is 'OP_DIV'):
             word = tokens.pop(0)
             if (factor(self)):
@@ -100,6 +120,9 @@ class Parser:
             error(self)
 
     def fact(self):
+        """
+        Factor -> (Expr) | Num | Var 
+        """
         if (self.word[0] is 'PARIZQ'):
             word = tokens.pop(0)
             if (not expr(self)):
